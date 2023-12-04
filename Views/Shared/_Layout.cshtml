@@ -1,0 +1,75 @@
+﻿@using eBanking.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+@using eBanking.Utils;
+@using static eBanking.Utils.InternalCurrencyRates
+
+@inject SignInManager<BankUser> SignInManager
+@inject IHttpClientFactory httpClientFactory
+
+@{
+    await InternalCurrencyRates.CallApi(httpClientFactory);
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - eBanking</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/eBanking.styles.css" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/favicon.png" />
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand text" asp-area="" asp-controller="Home" asp-action="Index">eBanking</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text" asp-action="Index" asp-controller=@User.FindFirstValue(ClaimTypes.Role)>Dashboard</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        @foreach (KeyValuePair<string, double> rate in InternalCurrencyRates.GetRates())
+                        {
+                            <li>
+                                <a class="nav-link rate text">1 EUR = @rate.Value @rate.Key</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <partial name="_LoginPartial" />
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text">
+        <h3>
+            Created by
+            <a href="https://github.com/nikosdaridis" target="_blank" rel="noreferrer">
+                <span class="github">Nikos Daridis</span>
+            </a> | @DateTime.Now.Year
+        </h3>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

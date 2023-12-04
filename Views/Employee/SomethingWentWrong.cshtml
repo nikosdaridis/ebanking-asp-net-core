@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Something Went Wrong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Something Went Wrong</h1>
+
+<hr />
+<div>
+    <a class="menu-btn" asp-action="Index">Back to Dashboard</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

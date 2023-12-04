@@ -1,0 +1,76 @@
+﻿@using eBanking.ViewModels
+
+@model IEnumerable<BankUserViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="menu-links">
+    <a class="menu-btn customer" asp-action="Create">Create Customer</a>
+    <a class="menu-btn customer" asp-action="DeleteCustomer">Delete Customer</a>
+    <a class="menu-btn customer" asp-action="FindCustomer">Find Customer</a>
+</div>
+
+<div class="menu-links">
+    <a class="menu-btn account" asp-action="AddAccount">Add Account</a>
+    <a class="menu-btn account" asp-action="DeleteAccount">Delete Account</a>
+    <a class="menu-btn account" asp-action="EditAccount">Edit Account</a>
+</div>
+
+<h2>Customers:</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text">
+                @Html.Raw("First Name")
+            </th>
+            <th class="text">
+                @Html.Raw("Last Name")
+            </th>
+            <th class="text">
+                @Html.Raw("Address")
+            </th>
+            <th class="text">
+                @Html.Raw("Phone")
+            </th class="text">
+            <th class="text">
+                @Html.Raw("Username / Email")
+            </th>
+            <th class="text">
+                @Html.Raw("AFM")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="index-row">
+                <td class="text">
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td >
+                <td class="text">
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(modelItem => item.AFM)
+                </td>
+                <td class="menu-row text">
+                    <a class="menu-btn" asp-action="Edit" asp-route-id="@item.AFM">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Customer Not Found";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Customer Not Found</h1>
+
+<hr />
+<div>
+    <a class="menu-btn" asp-action="Index">Back to Dashboard</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

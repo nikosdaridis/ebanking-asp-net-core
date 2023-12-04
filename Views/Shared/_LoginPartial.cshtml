@@ -1,0 +1,30 @@
+﻿@using eBanking.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<BankUser> SignInManager
+@inject UserManager<BankUser> UserManager
+
+<ul class="navbar-nav">
+
+    <div class="nav-item theme">
+        <img class="theme-icon" src="~/light.svg" draggable="false" />
+    </div>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a id="manage" class="nav-link text" asp-area="Identity" asp-page="/Account/Manage/ChangePassword" title="Manage">@UserManager.GetUserName(User)</a>
+        </li>
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link text border-0">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
+</ul>

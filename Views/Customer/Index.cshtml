@@ -1,0 +1,83 @@
+﻿@using eBanking.Utils;
+@using eBanking.ViewModels
+
+@model IEnumerable<eBanking.ViewModels.AccountViewModel>
+
+@inject IHttpClientFactory httpClientFactory
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    await ExternalCurrencyRates.CallApi(httpClientFactory);
+
+    double totalBalance = 0;
+
+    foreach (AccountViewModel account in Model)
+    {
+        totalBalance += account.Balance;
+    }
+
+    double totalBalanceUSD = totalBalance * ExternalCurrencyRates.GetRate("USD");
+}
+
+<div class="menu-link">
+    <a class="menu-btn" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">Change Password</a>
+</div>
+
+
+<h2 class="total-balance">@totalBalance.ToString("N2") EUR / @totalBalanceUSD.ToString("N2") USD</h2>
+
+<h2>Accounts:</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text">
+                @Html.Raw("Balance EUR")
+            </th>
+            <th class="text">
+                @Html.Raw("Balance USD")
+            </th>
+            <th class="text">
+                @Html.Raw("Number")
+            </th>
+            <th class="text">
+                @Html.Raw("Branch")
+            </th>
+            <th class="text">
+                @Html.Raw("Type")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (AccountViewModel account in Model)
+        {
+            <tr class="index-row">
+                <td class="text">
+                    @Html.Raw(account.Balance.ToString("N2") + " €")
+                </td>
+                <td class="text">
+                    @Html.Raw("$" + (account.Balance * ExternalCurrencyRates.GetRate("USD")).ToString("N2"))
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(modelItem => account.Number)
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(modelItem => account.Branch)
+                </td>
+                <td class="text">
+                    @Html.DisplayFor(modelItem => account.Type)
+                </td>
+                <td class="menu-row">
+                    <a class="menu-btn" asp-action="Deposit" asp-route-id="@account.Number">Deposit</a>
+                    <a class="menu-btn" asp-action="Transfer" asp-route-id="@account.Number">Transfer</a>
+                    <a class="menu-btn" asp-action="Details" asp-route-id="@account.Number">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

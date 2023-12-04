@@ -1,0 +1,37 @@
+﻿@model eBanking.ViewModels.AccountViewModel
+
+@{
+    ViewData["Title"] = "Deposit Account";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Deposit</h1>
+
+<h4>Account</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Deposit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Balance" class="control-label">Enter Amount</label>
+                <input asp-for="Balance" class="form-control" type="number" value="0" min="0.1" max="1000000" />
+                <span asp-validation-for="Balance" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input class="action-btn" type="submit" value="Deposit Account" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="menu-btn" asp-action="Index">Back to Dashboard</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

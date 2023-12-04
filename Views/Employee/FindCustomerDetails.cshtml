@@ -1,0 +1,55 @@
+﻿@model eBanking.ViewModels.BankUserViewModel
+
+@{
+    ViewData["Title"] = "Find Customer Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Find</h1>
+
+<div>
+    <h4>Customer Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AFM)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AFM)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.Raw("Username / Email")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="action-btn" asp-action="Edit" asp-route-id="@Model.AFM">Edit</a>
+    <a class="menu-btn" asp-action="Index">Back to Dashboard</a>
+</div>

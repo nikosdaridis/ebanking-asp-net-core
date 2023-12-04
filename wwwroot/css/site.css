@@ -1,0 +1,222 @@
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+:root {
+    --first-color: #fafcff;
+    --second-color: #f4f8ff;
+    --highlight-color: #1587ff;
+    --highlight-hover-color: #1c70ca;
+    --action-color: #c95213;
+    --action-hover-color: #aa5122;
+    --text-color: #24282a;
+    --theme-icon-filter: invert(0%) sepia(21%) saturate(69%) hue-rotate(155deg) brightness(122%) contrast(74%);
+    --theme-icon-hover-filter: invert(38%) sepia(91%) saturate(2685%) hue-rotate(198deg) brightness(103%) contrast(101%)
+}
+
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    background-color: var(--first-color);
+    margin-bottom: 60px;
+}
+
+.control-label, .text, h1, h2, h3, h4 {
+    color: var(--text-color);
+}
+
+.header, .footer {
+    background-color: var(--second-color);
+}
+
+.navbar-brand.text {
+    font-size: 24px;
+    font-weight: 800;
+    transition: 0.2s ease;
+}
+
+    .navbar-brand.text:hover {
+        color: var(--highlight-color)
+    }
+
+.nav-link.text {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-color);
+    transition: 0.2s ease;
+}
+
+.nav-link.rate.text:hover {
+    color: var(--text-color);
+}
+
+.nav-link:hover {
+    color: var(--highlight-color);
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+}
+
+    .footer h3 {
+        font-size: 16px;
+    }
+
+        .footer h3 a {
+            text-decoration: none;
+        }
+
+.menu-link {
+    display: flex;
+    justify-content: center;
+}
+
+.menu-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-left: 10rem;
+    margin-right: 10rem;
+    gap: 15rem;
+    text-align: center;
+    justify-content: center;
+}
+
+    .menu-links .customer {
+        background-color: #3f2c2c;
+    }
+
+        .menu-links .customer:hover {
+            background-color: #2c2121;
+        }
+
+    .menu-links .account {
+        background-color: #2d3f2c;
+    }
+
+        .menu-links .account:hover {
+            background-color: #232f23;
+        }
+
+.menu-btn,
+.action-btn {
+    border: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 5px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 15px;
+    color: #ffffff;
+    background-color: var(--highlight-color);
+    transition: 0.2s ease;
+}
+
+    .menu-btn:hover,
+    .action-btn:hover {
+        border-radius: 5px;
+        background-color: var(--highlight-hover-color);
+        color: #ffffff !important;
+        transform: scale(1.1);
+    }
+
+.action-btn {
+    background-color: var(--action-color);
+}
+
+    .action-btn:hover {
+        background-color: var(--action-hover-color);
+    }
+
+.total-balance {
+    display: flex;
+    justify-content: center;
+}
+
+hr, dt, dd {
+    color: var(--text-color);
+}
+
+.form-floating {
+    color: var(--text-color);
+}
+
+.form-control {
+    color: var(--text-color);
+    border-color: var(--highlight-color);
+    background-color: var(--first-color);
+}
+
+    .form-control:focus {
+        color: var(--text-color);
+        background-color: color-mix(in srgb, var(--second-color) 75%, var(--text-color));
+    }
+
+.index-row {
+    border: solid 2px color-mix(in srgb, var(--second-color) 40%, var(--highlight-color));
+    background-color: color-mix(in srgb, var(--second-color) 90%, var(--text-color));
+}
+
+    .index-row:nth-child(even) {
+        background-color: color-mix(in srgb, var(--second-color) 80%, var(--text-color));
+    }
+
+.menu-row {
+    display: flex;
+    border: none;
+    justify-content: space-around;
+}
+
+    .menu-row .menu-btn {
+        margin: 0;
+    }
+
+.nav-item.theme {
+    display: flex;
+    align-items: center;
+    margin-right: 2rem;
+}
+
+.theme-icon {
+    cursor: pointer;
+    height: 22px;
+    width: 22px;
+    transition: 0.2s ease;
+    filter: var(--theme-icon-filter);
+}
+
+    .theme-icon:hover {
+        filter: var(--theme-icon-hover-filter);
+    }
+
+
+.github {
+    color: var(--highlight-color);
+    transition: 0.2s ease;
+}
+
+    .github:hover {
+        color: var(--highlight-hover-color);
+    }

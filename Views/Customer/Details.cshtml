@@ -1,0 +1,50 @@
+﻿@using eBanking.Utils
+
+@model eBanking.ViewModels.AccountViewModel
+
+@{
+    ViewData["Title"] = "View Account Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>View</h1>
+
+<div>
+    <h4>Account Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Balance)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw(Model.Balance.ToString("N2") + " €")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.Raw("Balance USD")
+        </dt>
+        <dd class="col-sm-10">
+            @Html.Raw("$" + (Model.Balance * ExternalCurrencyRates.GetRate("USD")).ToString("N2"))
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Number)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Number)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Branch)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Branch)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class="menu-btn" asp-action="Index">Back to Dashboard</a>
+</div>
