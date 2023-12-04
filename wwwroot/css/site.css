@@ -159,6 +159,10 @@ hr, dt, dd {
     color: var(--text-color);
 }
 
+.text.email a{
+    color:var(--text-color);
+}
+
 .form-floating {
     color: var(--text-color);
 }
