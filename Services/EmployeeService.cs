@@ -27,24 +27,17 @@ namespace eBanking.Services
         }
 
         // POST: EmployeeController/Create
-        public async Task<bool> Create(BankUserViewModel userInput, ModelStateDictionary modelState)
+        public async Task Create(BankUserViewModel userInput, ModelStateDictionary modelState)
         {
-            if (modelState.IsValid)
-            {
-                BankUser user = _mapper.Map<BankUser>(userInput);
-                user.Email = user.UserName;
-                user.RoleId = "1";
+            if (!modelState.IsValid) return;
 
-                IdentityResult? result = await _userManager.CreateAsync(user, userInput.Password);
+            BankUser user = _mapper.Map<BankUser>(userInput);
+            user.Email = user.UserName;
+            user.RoleId = "1";
 
-                if (result.Succeeded) await _userManager.AddToRoleAsync(user, "Customer");
+            IdentityResult? result = await _userManager.CreateAsync(user, userInput.Password);
 
-                foreach (IdentityError error in result.Errors)
-                {
-                    modelState.AddModelError("", error.Description);
-                }
-            }
-            return true;
+            if (result.Succeeded) await _userManager.AddToRoleAsync(user, "Customer");
         }
 
         // POST: EmployeeController/AddAccount
@@ -58,16 +51,9 @@ namespace eBanking.Services
 
             AccountModel account = _mapper.Map<AccountModel>(accountInput);
 
-            try
-            {
-                _context.Accounts.Add(account);
-                _context.SaveChanges();
-                return "Index";
-            }
-            catch
-            {
-                return "SomethingWentWrong";
-            }
+            _context.Accounts.Add(account);
+            _context.SaveChanges();
+            return "Index";
         }
 
         // POST: EmployeeController/DeleteCustomer
@@ -77,16 +63,9 @@ namespace eBanking.Services
 
             if (user == null) return "CustomerNotFound";
 
-            try
-            {
-                _context.Users.Remove(user);
-                _context.SaveChanges();
-                return "Index";
-            }
-            catch
-            {
-                return "SomethingWentWrong";
-            }
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return "Index";
         }
 
         // POST: EmployeeController/DeleteAccount
@@ -96,19 +75,12 @@ namespace eBanking.Services
 
             if (accounts.Count == 0) return "AccountNotFound";
 
-            try
+            foreach (AccountModel account in accounts)
             {
-                foreach (AccountModel account in accounts)
-                {
-                    _context.Accounts.Remove(account);
-                    _context.SaveChanges();
-                }
-                return "Index";
+                _context.Accounts.Remove(account);
+                _context.SaveChanges();
             }
-            catch
-            {
-                return "SomethingWentWrong";
-            }
+            return "Index";
         }
 
         // GET: EmployeeController/Edit/afm
@@ -122,27 +94,19 @@ namespace eBanking.Services
         // POST: EmployeeController/Edit/afm
         public string Edit(BankUserViewModel userInput, int currentAFM)
         {
-            try
-            {
-                BankUser user = FindBankUserByAFM(currentAFM)!;
+            BankUser user = FindBankUserByAFM(currentAFM)!;
 
-                user.FirstName = userInput.FirstName;
-                user.LastName = userInput.LastName;
-                user.Address = userInput.Address;
-                user.Phone = userInput.Phone;
-                user.UserName = userInput.UserName;
-                user.Email = user.UserName;
-                user.NormalizedUserName = user.UserName.ToUpper();
-                user.NormalizedEmail = user.Email.ToUpper();
+            user.FirstName = userInput.FirstName;
+            user.LastName = userInput.LastName;
+            user.Address = userInput.Address;
+            user.Phone = userInput.Phone;
+            user.UserName = userInput.UserName;
+            user.Email = user.UserName;
+            user.NormalizedUserName = user.UserName.ToUpper();
+            user.NormalizedEmail = user.Email.ToUpper();
 
-                _context.SaveChanges();
-                return "Index";
-            }
-
-            catch
-            {
-                return "SomethingWentWrong";
-            }
+            _context.SaveChanges();
+            return "Index";
         }
 
         // POST: EmployeeController/FindCustomer
@@ -183,18 +147,12 @@ namespace eBanking.Services
             if (accountInput.Number != currentNumber && FindAccountModelByNumber(accountInput.Number) != null)
                 return "AccountAlreadyExists";
 
-            try
-            {
-                account!.Number = accountInput.Number;
-                account.Branch = accountInput.Branch;
-                account.Type = accountInput.Type;
-                _context.SaveChanges();
-                return "Index";
-            }
-            catch
-            {
-                return "SomethingWentWrong";
-            }
+            account!.Number = accountInput.Number;
+            account.Branch = accountInput.Branch;
+            account.Type = accountInput.Type;
+
+            _context.SaveChanges();
+            return "Index";
         }
 
         /// <summary>

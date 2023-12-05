@@ -34,7 +34,8 @@ namespace eBanking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(BankUserViewModel userInput)
         {
-            return RedirectToAction(await _employeeService.Create(userInput, ModelState) ? "Index" : "SomethingWentWrong");
+            await _employeeService.Create(userInput, ModelState);
+            return RedirectToAction("Index");
         }
 
         // GET: EmployeeController/AddAccount
@@ -175,14 +176,6 @@ namespace eBanking.Controllers
         // GET: EmployeeController/AccountAlreadyExists
         [HttpGet]
         public ActionResult AccountAlreadyExists()
-        {
-            return View();
-        }
-
-
-        // GET: EmployeeController/SomethingWentWrong
-        [HttpGet]
-        public ActionResult SomethingWentWrong()
         {
             return View();
         }

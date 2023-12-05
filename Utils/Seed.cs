@@ -20,7 +20,7 @@ namespace eBanking.Utils
             SeedRole(roleManager, "0", "Employee").Wait();
             SeedRole(roleManager, "1", "Customer").Wait();
 
-            // Seed employees
+            // Seed employee
             SeedEmployee(context, userManager, "Nikos", "Daridis", "Address 123", 1234567891, "daridis@email.com", 123456789, "Pass123").Wait();
 
             // Seed currencies
