@@ -8,9 +8,10 @@
 #### System Requirements
 
 **ASP.NET Core**
-.NET SDK 8.0.1
-.NET Runtime 8.0.0
-ASP.NET Core 8.0.0
+
+- .NET SDK 8.0.1
+- .NET Runtime 8.0.0
+- ASP.NET Core 8.0.0
 
 VisualStudio Version 17.8.2
 

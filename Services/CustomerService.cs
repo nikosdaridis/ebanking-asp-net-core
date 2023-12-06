@@ -28,32 +28,31 @@ namespace eBanking.Services
         }
 
         // GET: CustomerController/Deposit
-        public bool Deposit(int number)
+        public bool Deposit(uint number)
         {
             return AccountExists(number);
         }
 
         // POST: CustomerController/Deposit
-        public bool Deposit(AccountViewModel accountInput)
+        public string Deposit(AccountViewModel accountInput)
         {
             AccountModel? account = FindAccountModelByNumber(accountInput.Number);
 
-            if (account == null) return false;
+            if (account == null) return "AccountNotFound";
 
             account.Balance += accountInput.Balance;
             _context.SaveChanges();
-
-            return true;
+            return "Index";
         }
 
         // GET: CustomerController/Transfer
-        public AccountViewModel? Transfer(int number)
+        public AccountViewModel? Transfer(uint number)
         {
             return FindAccountViewModelByNumber(number);
         }
 
         // POST: CustomerController/Transfer
-        public string Transfer(AccountViewModel accountInput, int fromNumber)
+        public string Transfer(AccountViewModel accountInput, uint fromNumber)
         {
             AccountModel? fromAccount = FindAccountModelByNumber(fromNumber);
             AccountModel? transferAccount = FindAccountModelByNumber(accountInput.Number);
@@ -65,12 +64,11 @@ namespace eBanking.Services
             fromAccount.Balance -= accountInput.Balance;
             transferAccount.Balance += accountInput.Balance;
             _context.SaveChanges();
-
             return "Index";
         }
 
         // GET: CustomerController/Details
-        public AccountViewModel? Details(int number)
+        public AccountViewModel? Details(uint number)
         {
             return FindAccountViewModelByNumber(number);
         }
@@ -82,7 +80,7 @@ namespace eBanking.Services
         /// <returns>
         /// The AccountModel associated with the specified account number or null if no matching account is found
         /// </returns>
-        private AccountModel? FindAccountModelByNumber(int searchNumber)
+        private AccountModel? FindAccountModelByNumber(uint searchNumber)
         {
             return _context.Accounts.Where(account => account.Number == searchNumber).FirstOrDefault();
         }
@@ -94,9 +92,9 @@ namespace eBanking.Services
         /// <returns>
         /// The AccountViewModel associated with the specified account number or null if no matching account is found
         /// </returns>
-        private AccountViewModel? FindAccountViewModelByNumber(int searchNumber)
+        private AccountViewModel? FindAccountViewModelByNumber(uint searchNumber)
         {
-            return _mapper.Map<AccountViewModel>(_context.Accounts.Where(user => user.Number == searchNumber).FirstOrDefault());
+            return _mapper.Map<AccountViewModel>(_context.Accounts.Where(account => account.Number == searchNumber).FirstOrDefault());
         }
 
         /// <summary>
@@ -118,7 +116,7 @@ namespace eBanking.Services
         /// <returns>
         /// Returns true if an account with the specified number exists, otherwise returns false
         /// </returns>
-        private bool AccountExists(int searchNumber)
+        private bool AccountExists(uint searchNumber)
         {
             return _context.Accounts.Any(account => account.Number == searchNumber);
         }

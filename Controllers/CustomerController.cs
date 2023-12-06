@@ -26,7 +26,7 @@ namespace eBanking.Controllers
         // GET: CustomerController/Deposit
         [HttpGet]
         [Route("/Customer/Deposit/{number}")]
-        public ActionResult Deposit(int number)
+        public ActionResult Deposit(uint number)
         {
             return _customerService.Deposit(number) ? View(new AccountViewModel()) : RedirectToAction("AccountNotFound");
         }
@@ -37,13 +37,13 @@ namespace eBanking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Deposit(AccountViewModel accountInput)
         {
-            return RedirectToAction(_customerService.Deposit(accountInput) ? "Index" : "AccountNotFound");
+            return RedirectToAction(_customerService.Deposit(accountInput));
         }
 
         // GET: CustomerController/Transfer
         [HttpGet]
         [Route("/Customer/Transfer/{number}")]
-        public ActionResult Transfer(int number)
+        public ActionResult Transfer(uint number)
         {
             AccountViewModel? account = _customerService.Transfer(number);
             return account != null ? View(account) : RedirectToAction("AccountNotFound");
@@ -53,7 +53,7 @@ namespace eBanking.Controllers
         [HttpPost]
         [Route("/Customer/Transfer/{fromNumber}")]
         [ValidateAntiForgeryToken]
-        public ActionResult Transfer(AccountViewModel accountInput, int fromNumber)
+        public ActionResult Transfer(AccountViewModel accountInput, uint fromNumber)
         {
             return RedirectToAction(_customerService.Transfer(accountInput, fromNumber));
         }
@@ -61,7 +61,7 @@ namespace eBanking.Controllers
         // GET: CustomerController/Details
         [HttpGet]
         [Route("/Customer/Details/{number}")]
-        public ActionResult Details(int number)
+        public ActionResult Details(uint number)
         {
             AccountViewModel? account = _customerService.Details(number);
             return account != null ? View(account) : RedirectToAction("AccountNotFound");

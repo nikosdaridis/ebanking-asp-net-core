@@ -14,7 +14,7 @@ namespace eBanking.ViewModels
 
         [Required(ErrorMessage = "Number is required")]
         [RegularExpression("^[0-9][0-9]*$", ErrorMessage = "Please enter an integer greater than or equal to 0")]
-        public int Number { get; set; }
+        public uint Number { get; set; }
 
         [Required(ErrorMessage = "Branch is required")]
         [StringLength(30, ErrorMessage = "Maximum 30 characters")]

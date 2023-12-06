@@ -34,8 +34,7 @@ namespace eBanking.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(BankUserViewModel userInput)
         {
-            await _employeeService.Create(userInput, ModelState);
-            return RedirectToAction("Index");
+            return RedirectToAction(await _employeeService.Create(userInput, ModelState));
         }
 
         // GET: EmployeeController/AddAccount
@@ -113,9 +112,9 @@ namespace eBanking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FindCustomer(BankUserViewModel userInput)
         {
-            int customerAFM = _employeeService.FindCustomer(userInput);
+            int? customerAFM = _employeeService.FindCustomer(userInput);
 
-            return customerAFM != -1 ? RedirectToAction("FindCustomerDetails", new { userAFM = customerAFM }) : RedirectToAction("CustomerNotFound");
+            return customerAFM != null ? RedirectToAction("FindCustomerDetails", new { userAFM = customerAFM }) : RedirectToAction("CustomerNotFound");
         }
 
         // GET: EmployeeController/FindCustomerDetails
@@ -137,15 +136,15 @@ namespace eBanking.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditAccount(AccountViewModel accountInput)
         {
-            int accountNumber = _employeeService.EditAccount(accountInput);
+            uint? accountNumber = _employeeService.EditAccount(accountInput);
 
-            return accountNumber != -1 ? RedirectToAction("EditAccountDetails", new { number = accountNumber }) : RedirectToAction("AccountNotFound");
+            return accountNumber != null ? RedirectToAction("EditAccountDetails", new { number = accountNumber }) : RedirectToAction("AccountNotFound");
         }
 
         // GET: EmployeeController/EditAccountDetails/number
         [HttpGet]
         [Route("/Employee/EditAccountDetails/{number}")]
-        public ActionResult EditAccountDetails(int number)
+        public ActionResult EditAccountDetails(uint number)
         {
             return View(_employeeService.EditAccountDetails(number));
         }
@@ -154,7 +153,7 @@ namespace eBanking.Controllers
         [HttpPost]
         [Route("/Employee/EditAccountDetails/{currentNumber}")]
         [ValidateAntiForgeryToken]
-        public ActionResult EditAccountDetails(AccountViewModel accountInput, int currentNumber)
+        public ActionResult EditAccountDetails(AccountViewModel accountInput, uint currentNumber)
         {
             return RedirectToAction(_employeeService.EditAccountDetails(accountInput, currentNumber));
         }

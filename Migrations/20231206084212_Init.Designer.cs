@@ -12,7 +12,7 @@ using eBanking.Areas.Identity.Data;
 namespace eBanking.Migrations
 {
     [DbContext(typeof(BankDbContext))]
-    [Migration("20231204151604_Init")]
+    [Migration("20231206084212_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -271,8 +271,8 @@ namespace eBanking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Type")
                         .IsRequired()

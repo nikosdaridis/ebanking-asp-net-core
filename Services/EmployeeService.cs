@@ -27,9 +27,9 @@ namespace eBanking.Services
         }
 
         // POST: EmployeeController/Create
-        public async Task Create(BankUserViewModel userInput, ModelStateDictionary modelState)
+        public async Task<string> Create(BankUserViewModel userInput, ModelStateDictionary modelState)
         {
-            if (!modelState.IsValid) return;
+            if (!modelState.IsValid) return "Index";
 
             BankUser user = _mapper.Map<BankUser>(userInput);
             user.Email = user.UserName;
@@ -38,6 +38,7 @@ namespace eBanking.Services
             IdentityResult? result = await _userManager.CreateAsync(user, userInput.Password);
 
             if (result.Succeeded) await _userManager.AddToRoleAsync(user, "Customer");
+            return "Index";
         }
 
         // POST: EmployeeController/AddAccount
@@ -71,24 +72,19 @@ namespace eBanking.Services
         // POST: EmployeeController/DeleteAccount
         public string DeleteAccount(AccountViewModel accountInput)
         {
-            List<AccountModel>? accounts = _context.Accounts.Where(account => account.Number == accountInput.Number).ToList();
+            AccountModel? account = _context.Accounts.Where(account => account.Number == accountInput.Number).FirstOrDefault();
 
-            if (accounts.Count == 0) return "AccountNotFound";
+            if (account == null) return "AccountNotFound";
 
-            foreach (AccountModel account in accounts)
-            {
-                _context.Accounts.Remove(account);
-                _context.SaveChanges();
-            }
+            _context.Accounts.Remove(account);
+            _context.SaveChanges();
             return "Index";
         }
 
         // GET: EmployeeController/Edit/afm
         public BankUserViewModel? Edit(int afm)
         {
-            BankUserViewModel? user = FindBankUserViewModelByAFM(afm);
-
-            return user;
+            return FindBankUserViewModelByAFM(afm);
         }
 
         // POST: EmployeeController/Edit/afm
@@ -110,11 +106,9 @@ namespace eBanking.Services
         }
 
         // POST: EmployeeController/FindCustomer
-        public int FindCustomer(BankUserViewModel userInput)
+        public int? FindCustomer(BankUserViewModel userInput)
         {
-            BankUser? user = FindBankUserByAFM(userInput.AFM);
-
-            return user != null ? user.AFM : -1;
+            return FindBankUserByAFM(userInput.AFM)?.AFM;
         }
 
         // GET: EmployeeController/FindCustomerDetails
@@ -124,21 +118,19 @@ namespace eBanking.Services
         }
 
         // POST: EmployeeController/EditAccount
-        public int EditAccount(AccountViewModel accountInput)
+        public uint? EditAccount(AccountViewModel accountInput)
         {
-            AccountModel? account = FindAccountModelByNumber(accountInput.Number);
-
-            return account != null ? account.Number : -1;
+            return FindAccountModelByNumber(accountInput.Number)?.Number;
         }
 
         // GET: EmployeeController/EditAccountDetails/number
-        public AccountViewModel EditAccountDetails(int accountNumber)
+        public AccountViewModel EditAccountDetails(uint accountNumber)
         {
             return FindAccountViewModelByNumber(accountNumber)!;
         }
 
         // POST: EmployeeController/EditAccountDetails/number
-        public string EditAccountDetails(AccountViewModel accountInput, int currentNumber)
+        public string EditAccountDetails(AccountViewModel accountInput, uint currentNumber)
         {
             AccountModel? account = FindAccountModelByNumber(currentNumber);
 
@@ -186,7 +178,7 @@ namespace eBanking.Services
         /// <returns>
         /// The AccountModel associated with the specified account Number or null if no matching account is found
         /// </returns>
-        private AccountModel? FindAccountModelByNumber(int searchNumber)
+        private AccountModel? FindAccountModelByNumber(uint searchNumber)
         {
             return _context.Accounts.Where(account => account.Number == searchNumber).FirstOrDefault();
         }
@@ -198,7 +190,7 @@ namespace eBanking.Services
         /// <returns>
         /// The AccountViewModel associated with the specified account Number or null if no matching account is found
         /// </returns>
-        private AccountViewModel? FindAccountViewModelByNumber(int searchNumber)
+        private AccountViewModel? FindAccountViewModelByNumber(uint searchNumber)
         {
             return _mapper.Map<AccountViewModel>(_context.Accounts.Where(account => account.Number == searchNumber).FirstOrDefault());
         }

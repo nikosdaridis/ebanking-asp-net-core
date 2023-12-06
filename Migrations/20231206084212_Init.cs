@@ -102,7 +102,7 @@ namespace eBanking.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AFM = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<double>(type: "float", nullable: false),
-                    Number = table.Column<int>(type: "int", nullable: false),
+                    Number = table.Column<long>(type: "bigint", nullable: false),
                     Branch = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BankUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)

@@ -11,7 +11,7 @@ namespace eBanking.Models
 
         public double Balance { get; set; }
 
-        public int Number { get; set; }
+        public uint Number { get; set; }
 
         public string Branch { get; set; } = "";
 

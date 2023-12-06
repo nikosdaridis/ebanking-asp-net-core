@@ -268,8 +268,8 @@ namespace eBanking.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
+                    b.Property<long>("Number")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Type")
                         .IsRequired()

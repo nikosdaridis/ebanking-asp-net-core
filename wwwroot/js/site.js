@@ -1,32 +1,24 @@
 ﻿const root = document.querySelector(":root");
 const themeIcon = document.querySelector(".theme-icon");
+const localStorageTheme = localStorage.getItem("bank-theme");
 
-if (
-    localStorage.getItem("bank-theme") === "dark" ||
-    localStorage.getItem("bank-theme") === "light"
-)
-    setTheme(localStorage.getItem("bank-theme"));
+if (localStorageTheme === "dark" || localStorageTheme === "light")
+    setTheme(localStorageTheme);
+else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    setTheme("dark");
 else
-    setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    setTheme("light");
 
 function setTheme(theme) {
-    if (theme === "light") {
-        localStorage.setItem("bank-theme", "light");
-        root.style.setProperty("--first-color", "#ffffff");
-        root.style.setProperty("--second-color", "#f2f2f2");
-        root.style.setProperty("--theme-icon-filter", "invert(0%) sepia(21%) saturate(69%) hue-rotate(155deg) brightness(122%) contrast(74%)");
-        root.style.setProperty("--text-color", "#212121");
+    root.style.setProperty("--first-color", theme === "light" ? "#ffffff" : "#1f2023");
+    root.style.setProperty("--second-color", theme === "light" ? "#f2f2f2" : "#171717");
+    root.style.setProperty("--text-color", theme === "light" ? "#212121" : "#ffffff");
+    root.style.setProperty("--theme-icon-filter", theme === "light" ?
+        "invert(0%) sepia(21%) saturate(69%) hue-rotate(155deg) brightness(122%) contrast(74%)" :
+        "invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%)");
 
-        themeIcon.setAttribute("src", "/dark.svg");
-    } else {
-        localStorage.setItem("bank-theme", "dark");
-        root.style.setProperty("--first-color", "#1f2023");
-        root.style.setProperty("--second-color", "#171717");
-        root.style.setProperty("--text-color", "#ffffff");
-        root.style.setProperty("--theme-icon-filter", "invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%)");
-
-        themeIcon.setAttribute("src", "/light.svg");
-    }
+    themeIcon.setAttribute("src", theme === "light" ? "/dark.svg" : "/light.svg");
+    localStorage.setItem("bank-theme", theme);
 }
 
 themeIcon.addEventListener("click", function () {

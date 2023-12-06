@@ -7,7 +7,7 @@ namespace eBanking.Utils
     public static class Seed
     {
         /// <summary>
-        /// Seeds initial data for BankDbContext including roles, employees and currencies exchange rate
+        /// Seeds initial data for BankDbContext including roles, employee and currency exchange rates
         /// </summary>
         /// <param name="context"></param>
         /// <param name="userManager"></param>

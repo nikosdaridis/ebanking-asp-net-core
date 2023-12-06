@@ -16,7 +16,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Number" class="control-label">Enter Account Number</label>
-                <input asp-for="Number" class="form-control" type="number" value="0" />
+                <input asp-for="Number" class="form-control" type="number" value="0" min="0" max="4000000000" />
                 <span asp-validation-for="Number" class="text-danger"></span>
             </div>
             <div class="form-group">
