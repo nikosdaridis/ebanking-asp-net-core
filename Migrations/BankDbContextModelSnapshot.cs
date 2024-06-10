@@ -17,7 +17,7 @@ namespace eBanking.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -171,7 +171,6 @@ namespace eBanking.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -186,11 +185,9 @@ namespace eBanking.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -265,14 +262,12 @@ namespace eBanking.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Branch")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Number")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -63,9 +63,9 @@ namespace eBanking.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<long>(type: "bigint", nullable: false),
                     AFM = table.Column<int>(type: "int", nullable: false),
                     RoleId = table.Column<string>(type: "nvarchar(450)", nullable: true),
@@ -103,8 +103,8 @@ namespace eBanking.Migrations
                     AFM = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<double>(type: "float", nullable: false),
                     Number = table.Column<long>(type: "bigint", nullable: false),
-                    Branch = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Branch = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     BankUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>

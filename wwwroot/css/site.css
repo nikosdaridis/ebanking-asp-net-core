@@ -1,8 +1,12 @@
-/* Import Google font - Poppins */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+@font-face {
+    font-family: 'Poppins';
+    src: url('Poppins-Regular.ttf') format('woff2'), url('Poppins-Regular.ttf') format('woff'), url('Poppins-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 * {
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', Arial, sans-serif;
 }
 
 :root {
@@ -159,8 +163,8 @@ hr, dt, dd {
     color: var(--text-color);
 }
 
-.text.email a{
-    color:var(--text-color);
+.text.email a {
+    color: var(--text-color);
 }
 
 .form-floating {

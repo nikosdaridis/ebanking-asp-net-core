@@ -6,20 +6,13 @@ namespace eBanking.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CurrencyController : ControllerBase
+    public class CurrencyController(BankDbContext context) : ControllerBase
     {
-        private readonly BankDbContext _context;
-
-        public CurrencyController(BankDbContext context)
-        {
-            _context = context;
-        }
-
-        // GET: Currency
+        /// <summary>
+        /// Gets exchange rates for all currencies
+        /// </summary>
         [HttpGet]
-        public async Task<Dictionary<string, double>> GetRates()
-        {
-            return await _context.Currencies.ToDictionaryAsync(currency => currency.Name, currency => currency.Price);
-        }
+        public async Task<Dictionary<string, double>> GetRates() =>
+            await context.Currencies.ToDictionaryAsync(currency => currency.Name, currency => currency.Price);
     }
 }

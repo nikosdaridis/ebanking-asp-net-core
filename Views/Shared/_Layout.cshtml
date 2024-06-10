@@ -1,14 +1,9 @@
-﻿@using eBanking.Areas.Identity.Data
-@using Microsoft.AspNetCore.Identity
-@using System.Security.Claims;
-@using eBanking.Utils;
-@using static eBanking.Utils.InternalCurrencyRates
-
+﻿@inject IHttpClientFactory httpClientFactory
 @inject SignInManager<BankUser> SignInManager
-@inject IHttpClientFactory httpClientFactory
+@inject InternalCurrencyRatesService InternalCurrencyRatesService
 
 @{
-    await InternalCurrencyRates.CallApi(httpClientFactory);
+    await InternalCurrencyRatesService.CallApi(httpClientFactory);
 }
 
 <!DOCTYPE html>
@@ -41,7 +36,7 @@
                         }
                     </ul>
                     <ul class="navbar-nav flex-grow-1">
-                        @foreach (KeyValuePair<string, double> rate in InternalCurrencyRates.GetRates())
+                        @foreach (KeyValuePair<string, double> rate in InternalCurrencyRatesService.GetRates())
                         {
                             <li>
                                 <a class="nav-link rate text">1 EUR = @rate.Value @rate.Key</a>

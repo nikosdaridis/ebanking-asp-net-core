@@ -9,13 +9,8 @@ namespace eBanking.Mapper
     {
         public MapperProfiles()
         {
-            CreateMap<BankUser, BankUserViewModel>();
-
-            CreateMap<BankUserViewModel, BankUser>();
-
-            CreateMap<AccountModel, AccountViewModel>();
-
-            CreateMap<AccountViewModel, AccountModel>();
+            CreateMap<BankUser, BankUserViewModel>().ReverseMap();
+            CreateMap<AccountModel, AccountViewModel>().ReverseMap();
         }
     }
 }

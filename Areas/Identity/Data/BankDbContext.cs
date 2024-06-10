@@ -5,16 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace eBanking.Areas.Identity.Data;
 
-public class BankDbContext : IdentityDbContext<BankUser, BankRole, string,
+public class BankDbContext(DbContextOptions<BankDbContext> options) : IdentityDbContext<BankUser, BankRole, string,
         IdentityUserClaim<string>, IdentityUserRole<string>, IdentityUserLogin<string>,
-        IdentityRoleClaim<string>, IdentityUserToken<string>>
+        IdentityRoleClaim<string>, IdentityUserToken<string>>(options)
 {
-    public BankDbContext(DbContextOptions<BankDbContext> options)
-        : base(options)
-    {
+    public DbSet<BankRole> BankRole { get; set; }
+    public DbSet<CurrencyModel> Currencies { get; set; }
+    public DbSet<AccountModel> Accounts { get; set; }
 
-    }
-
+    /// <summary>
+    /// Configures database schema
+    /// </summary>
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -24,8 +25,4 @@ public class BankDbContext : IdentityDbContext<BankUser, BankRole, string,
             .WithMany(role => role.Users)
             .OnDelete(DeleteBehavior.NoAction);
     }
-
-    public DbSet<BankRole> BankRole { get; set; } = default!;
-    public DbSet<CurrencyModel> Currencies { get; set; } = default!;
-    public DbSet<AccountModel> Accounts { get; set; } = default!;
 }

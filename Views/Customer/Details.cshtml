@@ -1,4 +1,4 @@
-﻿@using eBanking.Utils
+﻿@inject ExternalCurrencyRatesService ExternalCurrencyRatesService
 
 @model eBanking.ViewModels.AccountViewModel
 
@@ -23,7 +23,7 @@
             @Html.Raw("Balance USD")
         </dt>
         <dd class="col-sm-10">
-            @Html.Raw("$" + (Model.Balance * ExternalCurrencyRates.GetRate("USD")).ToString("N2"))
+            @Html.Raw("$" + (Model.Balance * ExternalCurrencyRatesService.GetRate("USD")).ToString("N2"))
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Number)

@@ -1,9 +1,7 @@
-﻿@using eBanking.Utils;
-@using eBanking.ViewModels
-
-@model IEnumerable<eBanking.ViewModels.AccountViewModel>
+﻿@model IEnumerable<eBanking.ViewModels.AccountViewModel>
 
 @inject IHttpClientFactory httpClientFactory
+@inject ExternalCurrencyRatesService ExternalCurrencyRatesService
 
 @{
     ViewData["Title"] = "Index";
@@ -11,7 +9,7 @@
 }
 
 @{
-    await ExternalCurrencyRates.CallApi(httpClientFactory);
+    await ExternalCurrencyRatesService.CallApi(httpClientFactory);
 
     double totalBalance = 0;
 
@@ -20,7 +18,7 @@
         totalBalance += account.Balance;
     }
 
-    double totalBalanceUSD = totalBalance * ExternalCurrencyRates.GetRate("USD");
+    double totalBalanceUSD = totalBalance * ExternalCurrencyRatesService.GetRate("USD");
 }
 
 <div class="menu-link">
@@ -61,7 +59,7 @@
                     @Html.Raw(account.Balance.ToString("N2") + " €")
                 </td>
                 <td class="text">
-                    @Html.Raw("$" + (account.Balance * ExternalCurrencyRates.GetRate("USD")).ToString("N2"))
+                    @Html.Raw("$" + (account.Balance * ExternalCurrencyRatesService.GetRate("USD")).ToString("N2"))
                 </td>
                 <td class="text">
                     @Html.DisplayFor(modelItem => account.Number)
